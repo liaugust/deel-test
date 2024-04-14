@@ -9,7 +9,7 @@ This full-stack exercise involves building a Node.js/Express.js app that will se
 
 ## Data Models
 
-> **All models are defined in src/model.js**
+> **All models are defined in src/db.js**
 
 ### Profile
 

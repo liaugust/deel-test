@@ -1,8 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { sequelize } from './model.js';
 import { HTTP_STATUS } from './utils/constants.js';
 import { getProfile } from './middleware/getProfile.js';
+import { sequelize } from './lib/db.js';
+import './lib/relations.js'
 
 export const app = express();
 
@@ -28,24 +29,24 @@ app.get('/contracts/:id', getProfile, async (req, res) => {
 })
 
 // Returns a list of profiles, useful for your login
-app.get("/profiles", async (req, res) => {
-	const { Profile } = req.app.get("models");
+app.get('/profiles', async (req, res) => {
+	const { Profile } = req.app.get('models');
 	const { type } = req.query;
 
-	if (type === "client") {
+	if (type === 'client') {
 		const profiles = await Profile.findAll({
 			where: {
-				type: "client",
+				type: 'client',
 			},
 		});
 
 		return res.json(profiles);
 	}
 
-	if (type === "contractor") {
+	if (type === 'contractor') {
 		const profiles = await Profile.findAll({
 			where: {
-				type: "contractor",
+				type: 'contractor',
 			},
 		});
 
@@ -57,6 +58,6 @@ app.get("/profiles", async (req, res) => {
 	res.json(profiles);
 });
 
-app.get("/profile", getProfile, async (req, res) => {
+app.get('/profile', getProfile, async (req, res) => {
 	res.json(req.profile);
 });
