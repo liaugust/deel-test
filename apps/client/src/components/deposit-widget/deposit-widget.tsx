@@ -1,14 +1,16 @@
-import {FC, FormEvent,} from "react";
+import {FC, FormEvent, useEffect,} from "react";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {RadioGroup, RadioGroupItem} from "@/components/ui/radio-group.tsx";
 import {Label} from "@/components/ui/label.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useDeposit} from "@/lib/api/mutations/deposit.mutation.ts";
+import {useToast} from "@/components/ui/use-toast.ts";
 
 const AMOUNT_TO_DEPOSIT = ["1", "5", "10", "50", "100", "500"];
 
 export const DepositWidget: FC = () => {
-	const {mutateAsync} = useDeposit();
+	const {mutateAsync, error} = useDeposit();
+	const {toast} = useToast()
 	
 	const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -16,7 +18,17 @@ export const DepositWidget: FC = () => {
 		const formData = new FormData(e.target as HTMLFormElement);
 		
 		await mutateAsync(Number(formData.get("amount")));
+		toast({description: 'Successfully deposited'})
 	};
+	
+	useEffect(() => {
+		if (error) {
+			toast({
+				variant: 'destructive',
+				description: error.response?.data.error
+			})
+		}
+	}, [toast, error])
 	
 	return (
 		<Card>

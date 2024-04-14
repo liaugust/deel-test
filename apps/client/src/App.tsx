@@ -1,6 +1,8 @@
 import {Header} from "@/components/header/header.tsx";
 import {useGetProfile} from "@/lib/api/queries/get-profile.query.ts";
 import {ClientActions} from "@/components/client-actions/client-actions.tsx";
+import {Toaster} from "@/components/ui/toaster"
+
 
 function App() {
 	const {data} = useGetProfile()
@@ -10,6 +12,8 @@ function App() {
 			<Header />
 			
 			{data && <ClientActions />}
+			
+			<Toaster />
 		</div>
 	)
 }

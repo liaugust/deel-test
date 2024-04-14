@@ -7,6 +7,7 @@ import './lib/relations.js'
 import { config } from './utils/config.js';
 import { ProfileController } from './modules/profile/controller/profile.controller.js';
 import { ContractController } from './modules/contract/controller/contract.controller.js';
+import { JobController } from './modules/job/controller/job.controller.js';
 
 export const app = express();
 
@@ -20,9 +21,11 @@ app.set('models', sequelize.models)
 
 const profileController = new ProfileController();
 const contractController = new ContractController();
+const jobController = new JobController()
 
 app.get('/contracts/:id', getProfile, (req, res) => contractController.getById(req, res))
 app.get('/jobs/unpaid', getProfile, (req, res) => contractController.getUnpaidJobs(req, res))
+app.post('/jobs/:jobId/pay', getProfile, (req, res) => jobController.payForJob(req, res));
 
 app.get('/profiles', (req, res) => profileController.getProfiles(req, res));
 app.get('/profile', getProfile, (req, res) => profileController.getProfile(req, res));

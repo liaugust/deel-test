@@ -34,6 +34,14 @@ export class ProfileRepository {
 		});
 	}
 
+	async decrementBalance(profileId, amount, transaction) {
+		await this.repository.decrement('balance', {
+			by: amount,
+			transaction,
+			where: { id: profileId },
+		});
+	}
+
 	async getByIds(ids) {
 		return await this.repository.findAll({
 			where: {
@@ -42,5 +50,9 @@ export class ProfileRepository {
 				},
 			},
 		})
+	}
+
+	async getById(id) {
+		return await this.repository.findByPk(id)
 	}
 }
