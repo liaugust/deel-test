@@ -12,4 +12,12 @@ export class JobService {
 	async markAsPaid(jobId, transaction) {
 		await this.repository.markAsPaid(jobId, transaction)
 	}
+
+	async getBestProfessionForPeriod(start, end) {
+		return await this.repository.getBestProfessionForPeriod(start, end)
+	}
+
+	async getBestClientsForPeriod(start, end, limit) {
+		return await this.repository.getBestClientsForPeriod(start, end, limit)
+	}
 }

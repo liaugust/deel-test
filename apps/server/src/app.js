@@ -31,6 +31,9 @@ app.get('/profiles', (req, res) => profileController.getProfiles(req, res));
 app.get('/profile', getProfile, (req, res) => profileController.getProfile(req, res));
 app.get('/contractors', getProfile, (req, res) => profileController.getContractorsByClientId(req, res));
 
+app.get('/admin/best-profession', async (req, res) => jobController.getBestProfessionForPeriod(req, res))
+app.get('/admin/best-clients', (req, res) => jobController.getBestClientsForPeriod(req, res))
+
 // FIXME needs clarification.
 // Why not to just deposit by current profile id?
 // app.post("/balances/deposit/:userId", getProfile, async (req, res) => {

@@ -59,4 +59,46 @@ export class JobController {
 			res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error });
 		}
 	}
+
+	async getBestClientsForPeriod(req, res) {
+		const { start, end, limit = 2 } = req.query
+		const startDate = new Date(start)
+		const endDate = new Date(end)
+
+		try {
+			const clients = await this.jobService.getBestClientsForPeriod(startDate, endDate, limit)
+
+			const result = clients.map(item => {
+				const { id, firstName, lastName } = item.Contract.Client
+
+				return {
+					id,
+					paid: item.dataValues.paid,
+					fullName: `${firstName} ${lastName}`,
+				}
+			});
+
+			res.json(result)
+		} catch (e) {
+			const error = e instanceof Error ? e.message : 'Unknown error';
+
+			res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error })
+		}
+	}
+
+	async getBestProfessionForPeriod(req, res) {
+		const { start, end } = req.query
+		const startDate = new Date(start)
+		const endDate = new Date(end)
+
+		try {
+			const job = await this.jobService.getBestProfessionForPeriod(startDate, endDate)
+
+			res.json(job)
+		} catch (e) {
+			const error = e instanceof Error ? e.message : 'Unknown error';
+
+			res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error });
+		}
+	}
 }
