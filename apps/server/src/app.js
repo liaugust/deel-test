@@ -61,28 +61,3 @@ app.get('/profiles', async (req, res) => {
 app.get('/profile', getProfile, async (req, res) => {
 	res.json(req.profile);
 });
-
-app.get('/jobs/unpaid', getProfile, async (req, res) => {
-	const { Job, Contract } = req.app.get('models');
-	const { profile } = req;
-
-	const activeContracts = await Contract.findAll({
-		where: {
-			status: 'in_progress',
-			ClientId: profile.id,
-		},
-		include: [
-			{
-				model: Job,
-				as: 'Jobs',
-				where: {
-					paid: null,
-				},
-			},
-		],
-	});
-
-	const jobs = activeContracts.flatMap((contract) => contract.Jobs);
-
-	res.json(jobs);
-});
