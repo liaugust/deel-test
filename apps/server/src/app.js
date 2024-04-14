@@ -5,12 +5,13 @@ import { HTTP_STATUS } from './utils/constants.js';
 import { getProfile } from './middleware/getProfile.js';
 import { sequelize } from './lib/db.js';
 import './lib/relations.js'
+import { config } from './utils/config.js';
 
 export const app = express();
 
 app.use(bodyParser.json());
 app.use(cors({
-	origin: 'http://localhost:5173',
+	origin: config.clientBaseUrl,
 }))
 
 app.set('sequelize', sequelize)
