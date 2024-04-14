@@ -21,11 +21,8 @@ app.set('models', sequelize.models)
 const profileController = new ProfileController();
 const contractController = new ContractController();
 
-/**
- * FIX ME!
- * @returns contract by id
- */
 app.get('/contracts/:id', getProfile, (req, res) => contractController.getById(req, res))
+app.get('/jobs/unpaid', getProfile, (req, res) => contractController.getUnpaidJobs(req, res))
 
 app.get('/profiles', (req, res) => profileController.getProfiles(req, res));
 app.get('/profile', getProfile, (req, res) => profileController.getProfile(req, res));

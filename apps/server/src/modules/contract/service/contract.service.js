@@ -8,4 +8,8 @@ export class ContractService {
 	async getById(id) {
 		return await this.repository.getById(id)
 	}
+
+	async getUnpaidJobs(profileId) {
+		return await this.repository.getUnpaidJobs(profileId)
+	}
 }

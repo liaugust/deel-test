@@ -23,4 +23,20 @@ export class ContractController {
 			res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error })
 		}
 	}
+
+	async getUnpaidJobs(req, res) {
+		const { profile } = req;
+
+		try {
+			const activeContracts = await this.service.getUnpaidJobs(profile.id);
+
+			const jobs = activeContracts.flatMap((contract) => contract.Jobs);
+
+			res.json(jobs);
+		} catch (e) {
+			const error = e instanceof Error ? e.message : 'Unknown error';
+
+			res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error });
+		}
+	}
 }
