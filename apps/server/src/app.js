@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import { HTTP_STATUS } from './utils/constants.js';
 import { getProfile } from './middleware/getProfile.js';
@@ -8,6 +9,9 @@ import './lib/relations.js'
 export const app = express();
 
 app.use(bodyParser.json());
+app.use(cors({
+	origin: 'http://localhost:5173',
+}))
 
 app.set('sequelize', sequelize)
 app.set('models', sequelize.models)
