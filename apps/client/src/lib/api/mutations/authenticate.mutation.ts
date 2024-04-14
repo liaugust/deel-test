@@ -9,6 +9,7 @@ export const useAuthenticate = <T extends number>() => {
 	
 	return useMutation<unknown, unknown, T>(authenticate, {
 		onSettled: async () => {
+			await queryClient.invalidateQueries(["contractors"]);
 			await queryClient.invalidateQueries(["profile"]);
 		},
 	});
