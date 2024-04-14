@@ -18,11 +18,12 @@ export class ContractRepository {
 		});
 	}
 
-	async getUnpaidJobs(profileId) {
+	async getUnpaidJobs(profileId, contractorId) {
 		return await this.repository.findAll({
 			where: {
 				ClientId: profileId,
 				status: 'in_progress',
+				ContractorId: contractorId,
 			},
 			include: [
 				{

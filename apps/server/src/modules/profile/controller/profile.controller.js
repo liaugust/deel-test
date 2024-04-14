@@ -94,7 +94,7 @@ export class ProfileController {
 		try {
 			const clientContracts = await this.contractService.getByClientId(profile.id)
 			const contractorIds = clientContracts.flatMap(contract => contract.ContractorId)
-			
+
 			const uniqueContractorIds = [...new Set(contractorIds)]
 
 			const contractors = await this.profileService.getByIds(uniqueContractorIds)

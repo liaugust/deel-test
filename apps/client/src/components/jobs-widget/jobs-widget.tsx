@@ -1,9 +1,19 @@
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card.tsx";
 import {JobsTable} from "@/components/jobs-table/jobs-table.tsx";
 import {useGetUnpaidJobs} from "@/lib/api/jobs/queries/get-unpaid-jobs.query.ts";
+import {useContext, useEffect} from "react";
+import {ContractorContext} from "@/context/contractor-context.tsx";
+import {Label} from "@/components/ui/label.tsx";
 
 export function JobsWidget() {
-	const {data = []} = useGetUnpaidJobs();
+	const {contractorId} = useContext(ContractorContext)
+	const {data = [], refetch} = useGetUnpaidJobs(contractorId);
+	
+	useEffect(() => {
+		if (contractorId) {
+			refetch()
+		}
+	}, [contractorId])
 	
 	return (
 		<Card>
@@ -12,7 +22,7 @@ export function JobsWidget() {
 				<CardDescription>Manage your unpaid jobs.</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<JobsTable jobs={data} />
+				{contractorId ? <JobsTable jobs={data} /> : <Label>Choose contractor</Label>}
 			</CardContent>
 		</Card>
 	);

@@ -25,10 +25,10 @@ export class ContractController {
 	}
 
 	async getUnpaidJobs(req, res) {
-		const { profile } = req;
+		const { profile, query } = req;
 
 		try {
-			const activeContracts = await this.service.getUnpaidJobs(profile.id);
+			const activeContracts = await this.service.getUnpaidJobs(profile.id, query.contractorId);
 
 			const jobs = activeContracts.flatMap((contract) => contract.Jobs);
 
