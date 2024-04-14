@@ -20,4 +20,8 @@ export class ProfileService {
 	async incrementBalance(profileId, amount) {
 		await this.repository.incrementBalance(profileId, amount)
 	}
+
+	async getByIds(ids) {
+		return await this.repository.getByIds(ids)
+	}
 }

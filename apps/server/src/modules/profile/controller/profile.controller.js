@@ -1,9 +1,11 @@
 import { HTTP_STATUS } from '../../../utils/constants.js';
 import { ProfileService } from '../service/profile.service.js';
+import { ContractService } from '../../contract/service/contract.service.js';
 
 export class ProfileController {
 	constructor() {
-		this.service = new ProfileService();
+		this.profileService = new ProfileService();
+		this.contractService = new ContractService()
 	}
 
 	async getProfiles(req, res) {
@@ -11,18 +13,18 @@ export class ProfileController {
 
 		try {
 			if (type === 'client') {
-				const profiles = await this.service.getClients()
+				const profiles = await this.profileService.getClients()
 
 				return res.json(profiles);
 			}
 
 			if (type === 'contractor') {
-				const profiles = await this.service.getContractors()
+				const profiles = await this.profileService.getContractors()
 
 				return res.json(profiles);
 			}
 
-			const profiles = await this.service.getAll();
+			const profiles = await this.profileService.getAll();
 
 			res.json(profiles);
 		} catch (e) {
@@ -76,9 +78,28 @@ export class ProfileController {
 			//    });
 			// }
 
-			await this.service.incrementBalance(profile.id, amount);
+			await this.profileService.incrementBalance(profile.id, amount);
 
 			res.status(HTTP_STATUS.OK).end();
+		} catch (e) {
+			const error = e instanceof Error ? e.message : 'Unknown error';
+
+			res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error })
+		}
+	}
+
+	async getContractorsByClientId(req, res) {
+		const { profile } = req
+
+		try {
+			const clientContracts = await this.contractService.getByClientId(profile.id)
+			const contractorIds = clientContracts.flatMap(contract => contract.ContractorId)
+			
+			const uniqueContractorIds = [...new Set(contractorIds)]
+
+			const contractors = await this.profileService.getByIds(uniqueContractorIds)
+
+			res.json(contractors)
 		} catch (e) {
 			const error = e instanceof Error ? e.message : 'Unknown error';
 

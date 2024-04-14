@@ -9,6 +9,10 @@ export class ContractService {
 		return await this.repository.getById(id)
 	}
 
+	async getByClientId(clientId) {
+		return await this.repository.getByClientId(clientId)
+	}
+
 	async getUnpaidJobs(profileId) {
 		return await this.repository.getUnpaidJobs(profileId)
 	}

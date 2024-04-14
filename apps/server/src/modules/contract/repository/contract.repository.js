@@ -10,6 +10,14 @@ export class ContractRepository {
 		return await this.repository.findByPk(id)
 	}
 
+	async getByClientId(clientId) {
+		return await this.repository.findAll({
+			where: {
+				ClientId: clientId,
+			},
+		});
+	}
+
 	async getUnpaidJobs(profileId) {
 		return await this.repository.findAll({
 			where: {

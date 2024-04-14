@@ -1,4 +1,5 @@
 import { Profile } from '../entity/profile.entity.js';
+import { Op } from 'sequelize';
 
 export class ProfileRepository {
 	constructor() {
@@ -31,5 +32,15 @@ export class ProfileRepository {
 			transaction,
 			where: { id: profileId },
 		});
+	}
+
+	async getByIds(ids) {
+		return await this.repository.findAll({
+			where: {
+				id: {
+					[Op.in]: ids,
+				},
+			},
+		})
 	}
 }

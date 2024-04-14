@@ -26,6 +26,7 @@ app.get('/jobs/unpaid', getProfile, (req, res) => contractController.getUnpaidJo
 
 app.get('/profiles', (req, res) => profileController.getProfiles(req, res));
 app.get('/profile', getProfile, (req, res) => profileController.getProfile(req, res));
+app.get('/contractors', getProfile, (req, res) => profileController.getContractorsByClientId(req, res));
 
 // FIXME needs clarification.
 // Why not to just deposit by current profile id?
