@@ -1,6 +1,6 @@
-const { HTTP_STATUS } = require('../utils/constants');
+import { HTTP_STATUS } from '../utils/constants.js';
 
-const getProfile = async (req, res, next) => {
+export const getProfile = async (req, res, next) => {
     const {Profile} = req.app.get('models')
     const profile = await Profile.findOne({where: {id: req.get('profile_id') || 0}})
 
@@ -11,4 +11,3 @@ const getProfile = async (req, res, next) => {
     req.profile = profile
     next()
 }
-module.exports = {getProfile}

@@ -2,6 +2,7 @@
   "name": "deel-task",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "nodemon ./src/server.js",
     "seed": "node ./scripts/seedDb.js"

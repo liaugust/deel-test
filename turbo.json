@@ -9,7 +9,10 @@
     "lint": {
       "dependsOn": ["^lint"]
     },
-    "dev": {
+    "seed": {
+      "dependsOn": ["^seed"]
+    },
+    "start": {
       "cache": false,
       "persistent": true
     }
