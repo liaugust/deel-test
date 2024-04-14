@@ -1,8 +1,9 @@
 import {api} from "@/lib/api/api.ts";
 import {useQuery} from "react-query";
+import {Profile} from "@/types.ts";
 
 const getProfiles = async (type: 'client' | 'contractor') => {
-	const result = await api.get<{ id: number; firstName: string; lastName: string }[]>(`/profiles?type=${type}`);
+	const result = await api.get<Profile[]>(`/profiles?type=${type}`);
 	return result.data;
 };
 

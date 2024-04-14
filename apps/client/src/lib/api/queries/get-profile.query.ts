@@ -1,8 +1,9 @@
 import {useQuery} from "react-query";
 import {api} from "@/lib/api/api.ts";
+import {Profile} from "@/types.ts";
 
 const getProfile = async () => {
-	const result = await api.get<{ id: number; firstName: string; lastName: string; balance: number }>("/profile");
+	const result = await api.get<Profile>("/profile");
 	return result.data;
 };
 
