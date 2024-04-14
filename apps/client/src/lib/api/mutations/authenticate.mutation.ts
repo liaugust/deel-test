@@ -11,6 +11,7 @@ export const useAuthenticate = <T extends number>() => {
 		onSettled: async () => {
 			await queryClient.invalidateQueries(["contractors"]);
 			await queryClient.invalidateQueries(["profile"]);
+			await queryClient.invalidateQueries(["jobs"]);
 		},
 	});
 };
